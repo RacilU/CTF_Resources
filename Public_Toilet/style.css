@@ -1,0 +1,76 @@
+body {
+  font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+  background-color: #f0f8ff;
+  color: #333;
+}
+
+.return-btn {
+  background-color: #e0f7fa; /* 연한 민트 */
+  color: #007b8a;            /* 어두운 청록 */
+  border: 1px solid #b2ebf2;
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-weight: 500;
+  font-size: 0.95rem;
+  cursor: pointer;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.return-btn:hover {
+  background-color: #b2ebf2;
+  transform: scale(1.02);
+}
+
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #2a8b9c;
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+
+.carousel-item img {
+  height: 500px;
+  object-fit: cover;
+  filter: brightness(0.85);
+}
+
+.carousel-caption {
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 10px;
+  padding: 1rem 2rem;
+  color: #333;
+}
+
+.nav-link {
+  font-weight: 500;
+  color: #555;
+}
+
+.nav-link:hover {
+  color: #007bff;
+}
+
+.card {
+  border: none;
+  border-radius: 10px;
+  transition: transform 0.2s;
+}
+
+.card:hover {
+  transform: scale(1.03);
+}
+
+.card-title {
+  color: #2a8b9c;
+  font-weight: 600;
+}
+
+.card-text code {
+  background-color: #e3f2fd;
+  padding: 0.1em 0.4em;
+  border-radius: 5px;
+}
+
