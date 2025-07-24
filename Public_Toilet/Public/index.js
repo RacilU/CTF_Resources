@@ -9,17 +9,15 @@ const chrome = require('selenium-webdriver/chrome');
 
 let isAdminRunning = false;
 
-
 let adminWatchdog = null;
 function startAdminWatchdog() {
-  if (adminWatchdog) clearTimeout(adminWatchdog); 
+  if (adminWatchdog) clearTimeout(adminWatchdog);
   adminWatchdog = setTimeout(() => {
     console.warn('[*] watchdog: isAdminRunning reset');
     isAdminRunning = false;
     adminWatchdog = null;
-  }, 10_000); 
+  }, 10_000);
 }
-
 
 function renderTemplate(html, data) {
   return html.replace(/{{\s*test\s*}}/g, data);
@@ -67,15 +65,19 @@ async function visitAsAdmin(targetUrl) {
   } catch (err) {
     console.error('[!] Admin bot error:', err.message || err);
   } finally {
-    try { if (driver) await driver.quit(); } catch (e) {
+    try {
+      if (driver) await driver.quit();
+    } catch (e) {
       console.error('[!] driver.quit() fail:', e.message);
     }
-    if (adminWatchdog) { clearTimeout(adminWatchdog); adminWatchdog = null; }
+    if (adminWatchdog) {
+      clearTimeout(adminWatchdog);
+      adminWatchdog = null;
+    }
     isAdminRunning = false;
     console.log('[+] Admin bot terminated, isAdminRunning =', isAdminRunning);
   }
 }
-
 
 function getRawQueryString(url) {
   const idx = url.indexOf('?');
@@ -159,7 +161,17 @@ const server = http.createServer((req, res) => {
       const filePath = path.join(__dirname, 'views', 'post.html');
       fs.readFile(filePath, 'utf8', (err, html) => {
         if (err) return res.writeHead(500).end('Error loading post.html');
-        const rendered = renderTemplate(html, img);
+
+        const unsafe = parsed.query.url || '';
+        const escaped = unsafe
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#x27;')
+          .replace(/\//g, '&#x2F;');
+
+        const rendered = renderTemplate(html, escaped);
         res.writeHead(200, { 'Content-Type': 'text/html' });
         res.end(rendered);
       });
@@ -200,13 +212,13 @@ const server = http.createServer((req, res) => {
 
         const ext = path.extname(filePath).toLowerCase();
         const contentTypes = {
-          '.png':  'image/png',
-          '.jpg':  'image/jpeg',
+          '.png': 'image/png',
+          '.jpg': 'image/jpeg',
           '.jpeg': 'image/jpeg',
-          '.gif':  'image/gif',
-          '.svg':  'image/svg+xml',
-          '.css':  'text/css',
-          '.js':   'application/javascript'
+          '.gif': 'image/gif',
+          '.svg': 'image/svg+xml',
+          '.css': 'text/css',
+          '.js': 'application/javascript'
         };
 
         const contentType = contentTypes[ext] || 'application/octet-stream';
