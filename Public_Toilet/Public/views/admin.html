@@ -1,0 +1,18 @@
+<h2 class="mb-4 text-dark">Admin Panel</h2>
+<form id="adminForm">
+  <label for="url" class="form-label text-dark">접속할 URL</label>
+  <div class="input-group mb-3">
+    <input type="text" class="form-control" id="url" name="url" placeholder="/index.html" required>
+    <button type="submit" class="btn btn-primary">Send</button>
+  </div>
+</form>
+
+<script>
+  document.getElementById('adminForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const url = document.getElementById('url').value;
+    const res = await fetch(`/submit?url=${encodeURIComponent(url)}`);
+    const text = await res.text();
+    alert(text);
+  });
+</script>
