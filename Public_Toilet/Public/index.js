@@ -39,7 +39,7 @@ async function visitAsAdmin(targetUrl) {
   if (isAdminRunning) return;
   isAdminRunning = true;
   startAdminWatchdog();
-  console.log('[+] Admin bot 시작');
+  console.log('[+] Admin bot start');
 
   let driver;
   try {
@@ -68,11 +68,11 @@ async function visitAsAdmin(targetUrl) {
     console.error('[!] Admin bot error:', err.message || err);
   } finally {
     try { if (driver) await driver.quit(); } catch (e) {
-      console.error('[!] driver.quit() 실패:', e.message);
+      console.error('[!] driver.quit() fail:', e.message);
     }
-    if (adminWatchdog) { clearTimeout(adminWatchdog); adminWatchdog = null; } // ★ 타이머 해제
+    if (adminWatchdog) { clearTimeout(adminWatchdog); adminWatchdog = null; }
     isAdminRunning = false;
-    console.log('[+] Admin bot 종료, isAdminRunning =', isAdminRunning);
+    console.log('[+] Admin bot terminated, isAdminRunning =', isAdminRunning);
   }
 }
 
