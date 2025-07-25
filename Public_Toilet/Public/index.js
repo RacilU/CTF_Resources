@@ -23,16 +23,6 @@ function renderTemplate(html, data) {
   return html.replace(/{{\s*test\s*}}/g, data);
 }
 
-function getFirstQueryValue(url) {
-  const queryStart = url.indexOf('?');
-  if (queryStart === -1) return '';
-  const queryString = url.substring(queryStart + 1);
-  const pairs = queryString.split('&');
-  const first = pairs[0];
-  const value = first.includes('=') ? first.split('=')[1] : '';
-  return value || '';
-}
-
 async function visitAsAdmin(targetUrl) {
   if (isAdminRunning) return;
   isAdminRunning = true;
